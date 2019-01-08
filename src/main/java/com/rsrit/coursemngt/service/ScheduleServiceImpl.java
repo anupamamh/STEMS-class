@@ -13,7 +13,7 @@ public class ScheduleServiceImpl implements ScheduleService {
 
 	@Autowired
 	ScheduleRepository scheduleRepository;
-	
+
 	@Override
 	public List<Schedule> getAllSchedules() {
 		return scheduleRepository.findAll();

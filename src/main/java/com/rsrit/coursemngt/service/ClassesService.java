@@ -2,26 +2,26 @@ package com.rsrit.coursemngt.service;
 
 import java.util.List;
 
-import com.rsrit.coursemngt.model.Classes;
+import com.rsrit.coursemngt.model.Class;
 
 public interface ClassesService {
 
-	void addClass(Classes classes);
+	void addClass(Class classes);
 
-	List<Classes> getAllClasses();
+	List<Class> getAllClasses();
 
-	Classes getClassById(int classid);
+	Class getClassById(long classId);
 
-	Classes updateClass(Classes classes, int classId);
+	Class updateClass(Class classes);
 
-	void deleteClassById(int classId);
+	void deleteClassById(long classId);
 
 	void deleteAllClasses();
 
-	Classes getClassByName(String string);
+	Class getClassByName(String string);
 
-	Classes getClassByStudentId(long studentId);
+	Class getClassByStudentId(long studentId);
 
-	Classes getClassByTrainerId(long trainerId);
+	Class getClassByTrainerId(long trainerId);
 
 }

@@ -15,7 +15,7 @@ import com.rsrit.coursemngt.model.Schedule;
 import com.rsrit.coursemngt.service.ScheduleService;
 
 @RestController
-public class ScheduleRESTController {
+public class ScheduleController {
 
 	@Autowired
 	ScheduleService scheduleService;

@@ -1,8 +1,10 @@
 package com.rsrit.coursemngt.model;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,38 +16,35 @@ import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
 @Entity
-public class Classes {
+public class Class{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int classId;
+	private long classId;
 	@NotNull
 	@Size(min = 3, max = 15)
 	private String className;
-	private int trainerId;
+	private long trainerId;
 	private String trainerName;
 	@ElementCollection
 	private List<String> studentsIds;
 	@JsonProperty(access = Access.WRITE_ONLY)
 	private Timestamp createdOn;
-	private String createdBy;
-	@OneToMany(mappedBy = "classes")
-	private List<Session> listOfSessions;
+	private long createdBy;
+	@OneToMany(mappedBy = "classes",cascade=CascadeType.ALL)
+	private List<Session> listOfSessions = new ArrayList<Session>();
 	@OneToOne
 	@JoinColumn(name = "scheduleId")
 	private Schedule schedule;
 
-	@JsonCreator
-	public Classes(int classId, @JsonProperty(value = "className", required = true) @NotNull String className,
-			@JsonProperty(value = "trainerId", required = true) int trainerId,
-			@JsonProperty(value = "trainerName", required = true) String trainerName,
-			@JsonProperty(value = "studentsIds", required = true) List<String> studentsIds, Timestamp createdOn,
-			String createdBy, List<Session> listOfSessions, Schedule schedule) {
+	
+	/*public Classes(long classId, @NotNull @Size(min = 3, max = 15) String className, long trainerId, String trainerName,
+			List<String> studentsIds, Timestamp createdOn, long createdBy, List<Session> listOfSessions,
+			Schedule schedule) {
 		super();
 		this.classId = classId;
 		this.className = className;
@@ -56,13 +55,15 @@ public class Classes {
 		this.createdBy = createdBy;
 		this.listOfSessions = listOfSessions;
 		this.schedule = schedule;
-	}
+	}*/
 
-	public int getClassId() {
+
+	public long getClassId() {
 		return classId;
 	}
 
-	public void setClassId(int classId) {
+	
+	public void setClassId(long classId) {
 		this.classId = classId;
 	}
 
@@ -74,11 +75,11 @@ public class Classes {
 		this.className = className;
 	}
 
-	public int getTrainerId() {
+	public long getTrainerId() {
 		return trainerId;
 	}
 
-	public void setTrainerId(int trainerId) {
+	public void setTrainerId(long trainerId) {
 		this.trainerId = trainerId;
 	}
 
@@ -106,11 +107,11 @@ public class Classes {
 		this.createdOn = createdOn;
 	}
 
-	public String getCreatedBy() {
+	public long getCreatedBy() {
 		return createdBy;
 	}
 
-	public void setCreatedBy(String createdBy) {
+	public void setCreatedBy(long createdBy) {
 		this.createdBy = createdBy;
 	}
 

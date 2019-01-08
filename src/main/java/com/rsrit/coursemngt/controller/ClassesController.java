@@ -19,29 +19,24 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.rsrit.coursemngt.exception.ClassesCustomGenericException;
-import com.rsrit.coursemngt.model.Classes;
+import com.rsrit.coursemngt.model.Class;
 import com.rsrit.coursemngt.service.ClassesService;
 
 @RestController
-public class ClassesRESTController {
+public class ClassesController {
 
-	private static final Logger logger = LogManager.getLogger(ClassesRESTController.class.getName());
+	private static final Logger logger = LogManager.getLogger(ClassesController.class.getName());
 
-	public ClassesRESTController() {
+	public ClassesController() {
 		System.out.println("--------Classes REST Controller-----------");
 	}
 
 	@Autowired
 	private ClassesService classesService;
 
-	/*
-	 * @GetMapping("/classes") public Classes getClasses() { return
-	 * classService.getClassByName("java"); }
-	 */
-
 	// displaying list of available Classes
 	@GetMapping("/classes")
-	public List<Classes> getAllClasses() {
+	public List<Class> getAllClasses() {
 		logger.info("Classes Controller getAllClasses() STARTED");
 		return classesService.getAllClasses();
 
@@ -49,7 +44,7 @@ public class ClassesRESTController {
 
 	// retrieving classes by studentID or trainerId
 	@GetMapping("/classes/{Id}")
-	public Classes getClassesByIds(@RequestParam long studentId, @RequestParam long trainerId) {
+	public Class getClassesByIds(@RequestParam long studentId, @RequestParam long trainerId) {
 
 		if (String.valueOf(studentId) != null) {
 			return classesService.getClassByStudentId(studentId);
@@ -59,46 +54,55 @@ public class ClassesRESTController {
 
 	}
 
-	// displaying class by id
-	@GetMapping("/classes/{id}")
-	public Classes getClassById(@PathVariable int id) throws Exception {
-		logger.info("Classes Controller getClass() STARTED");
-		// System.out.println();
-		return classesService.getClassById(id);
-
-	}
+	/*
+	 * // displaying class by id
+	 * 
+	 * @GetMapping("/classes/{id}") public Classes getClassById(@PathVariable long
+	 * id) throws Exception { logger.info("Classes Controller getClass() STARTED");
+	 * // System.out.println(); return classesService.getClassById(id);
+	 * 
+	 * }
+	 */
 
 	// displaying class by className
 	@GetMapping("/classes/{name}")
-	public Classes getClassByClassName(@PathVariable String name) throws Exception {
+	public Class getClassByClassName(@PathVariable String name) throws Exception {
 		return classesService.getClassByName(name);
 
 	}
 
 	// inserting class
 	@PostMapping("/classes")
-	public void addClass(@RequestBody @Valid Classes classes) throws ClassesCustomGenericException {
+	public void addClass(@RequestBody @Valid Class classes) throws ClassesCustomGenericException {
 		logger.info("Classes Controller addClass() STARTED");
-		if (classes.getClassId() == 0) {
-			if (classes.getClassName() == "" || classes.getClassName().length() == 0) {
-				classes.setClassName(null);
-			}
-			classes.setCreatedOn(Timestamp.from(Instant.now()));
-			logger.info("Classes Controller addClass() END");
-			classesService.addClass(classes);
-		}
+		/*
+		 * if (classes.getClassId() == 0) { if (classes.getClassName() == "" ||
+		 * classes.getClassName().length() == 0) { classes.setClassName(null); }
+		 */
+		classes.setCreatedOn(Timestamp.from(Instant.now()));
+		logger.info("Classes Controller addClass() END");
+		classesService.addClass(classes);
+		// }
 	}
-
-	// updating class by id
+/*
+ * // updating class by id
 	@PutMapping("/classes/{id}")
 	public void updateClass(@RequestBody Classes classes, @PathVariable int classId) {
 		logger.info("Classes Controller updateClass() STARTED");
 		classesService.updateClass(classes, classId);
 	}
+ */
+	// updating class by id
+	@PutMapping("/classes")
+	public void updateClass(@RequestBody Class classes) {
+		classes.setCreatedOn(Timestamp.from(Instant.now()));
+		logger.info("Classes Controller updateClass() STARTED");
+		classesService.updateClass(classes);
+	}
 
 	// deleting class by id
-	@DeleteMapping("/classes/{id}")
-	public void deleteClassById(@RequestBody Classes classes, @PathVariable int classId) {
+	@DeleteMapping("/classes/{classId}")
+	public void deleteClassById(@PathVariable long classId) {
 		logger.info("Classes Controller deleteClass() STARTED");
 		classesService.deleteClassById(classId);
 	}

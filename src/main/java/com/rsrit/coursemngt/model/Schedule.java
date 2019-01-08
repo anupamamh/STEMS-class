@@ -19,10 +19,10 @@ public class Schedule {
 	private Timestamp scheduleStartDate;
 	private Timestamp scheduleEndDate;
 	@ElementCollection
-	private List<String> topicsIds;
+	private List<String> topics;
 	private int numberOfSessions;
 	@OneToOne
-	private Classes classes;
+	private Class classes;
 
 	public int getScheduleId() {
 		return scheduleId;
@@ -48,12 +48,12 @@ public class Schedule {
 		this.scheduleEndDate = scheduleEndDate;
 	}
 
-	public List<String> getTopicsIds() {
-		return topicsIds;
+	public List<String> getTopics() {
+		return topics;
 	}
 
-	public void setTopicsIds(List<String> topicsIds) {
-		this.topicsIds = topicsIds;
+	public void setTopics(List<String> topics) {
+		this.topics = topics;
 	}
 
 	public int getNumberOfSessions() {
@@ -64,18 +64,18 @@ public class Schedule {
 		this.numberOfSessions = numberOfSessions;
 	}
 
-	public Classes getClasses() {
+	public Class getClasses() {
 		return classes;
 	}
 
-	public void setClasses(Classes classes) {
+	public void setClasses(Class classes) {
 		this.classes = classes;
 	}
 
 	@Override
 	public String toString() {
 		return "Schedule [scheduleId=" + scheduleId + ", scheduleStartDate=" + scheduleStartDate + ", scheduleEndDate="
-				+ scheduleEndDate + ", topicsIds=" + topicsIds + ", numberOfSessions=" + numberOfSessions + ", classes="
+				+ scheduleEndDate + ", topicsIds=" + topics + ", numberOfSessions=" + numberOfSessions + ", classes="
 				+ classes + "]";
 	}
 

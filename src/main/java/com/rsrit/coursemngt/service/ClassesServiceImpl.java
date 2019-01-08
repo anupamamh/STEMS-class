@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.rsrit.coursemngt.model.Classes;
+import com.rsrit.coursemngt.model.Class;
 import com.rsrit.coursemngt.repos.ClassesRepository;
 
 @Service
@@ -15,22 +15,21 @@ public class ClassesServiceImpl implements ClassesService {
 	private ClassesRepository classesRepository;
 
 	@Override
-	public void addClass(Classes classes) {
+	public void addClass(Class classes) {
 
 		classesRepository.save(classes);
 
 	}
 
 	@Override
-	public List<Classes> getAllClasses() {
+	public List<Class> getAllClasses() {
 
-		List<Classes> list = classesRepository.findAll();
+		List<Class> list = classesRepository.findAll();
 		return list;
 	}
 
 	@Override
-	public Classes getClassById(int classId) {
-
+	public Class getClassById(long classId) {
 		return classesRepository.getOne(classId);
 
 	}
@@ -46,13 +45,13 @@ public class ClassesServiceImpl implements ClassesService {
 	 */
 
 	@Override
-	public Classes updateClass(Classes classes, int classId) {
-		classesRepository.getOne(classId);
+	public Class updateClass(Class classes) {
+		classesRepository.getOne(classes.getClassId());
 		return classesRepository.save(classes);
 	}
 
 	@Override
-	public void deleteClassById(int classId) {
+	public void deleteClassById(long classId) {
 
 		classesRepository.deleteById(classId);
 
@@ -64,19 +63,19 @@ public class ClassesServiceImpl implements ClassesService {
 	}
 
 	@Override
-	public Classes getClassByName(String string) {
+	public Class getClassByName(String string) {
 		return null;
 
 	}
 
 	@Override
-	public Classes getClassByStudentId(long studentId) {
-		return classesRepository.getOne((int) studentId);
+	public Class getClassByStudentId(long studentId) {
+		return classesRepository.getOne(studentId);
 	}
 
 	@Override
-	public Classes getClassByTrainerId(long trainerId) {
-		return classesRepository.getOne((int) trainerId);
+	public Class getClassByTrainerId(long trainerId) {
+		return classesRepository.getOne(trainerId);
 	}
 
 }

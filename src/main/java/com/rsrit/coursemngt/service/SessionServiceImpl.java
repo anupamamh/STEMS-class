@@ -13,7 +13,7 @@ public class SessionServiceImpl implements SessionService {
 
 	@Autowired
 	private SessionRepository sessionRepository;
-	
+
 	@Override
 	public void addSession(Session session) {
 		sessionRepository.save(session);
@@ -25,18 +25,18 @@ public class SessionServiceImpl implements SessionService {
 	}
 
 	@Override
-	public Session getSessionById(int sessionId) {
+	public Session getSessionById(long sessionId) {
 		return sessionRepository.getOne(sessionId);
 	}
 
 	@Override
-	public Session updateSession(Session session, int sessionId) {
+	public Session updateSession(Session session, long sessionId) {
 		sessionRepository.getOne(sessionId);
 		return sessionRepository.save(session);
 	}
 
 	@Override
-	public void deleteSessionById(int sessionId) {
+	public void deleteSessionById(long sessionId) {
 		sessionRepository.deleteById(sessionId);
 	}
 
@@ -45,10 +45,9 @@ public class SessionServiceImpl implements SessionService {
 		sessionRepository.deleteAll();
 	}
 
-	
 	@Override
-	public List<String> addTopicsToSession(List<String> topics) {		
-//		Todo
+	public List<String> addTopicsToSession(List<String> topics) {
+		// Todo
 		return null;
 	}
 

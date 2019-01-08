@@ -8,26 +8,30 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
+
 @Entity
 public class Session {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int sessionId;
+	private long sessionId;
 	private Timestamp createdOn;
-	private double runTime;
+	private double sessionDuration;
 	private String attendeeIds;
 	private String absenteeIds;
-	private boolean isAssignmentProvided;
+	private boolean isAssignmentGiven;
 	private String listOfTopics;
 	@ManyToOne
-	private Classes classes;
+	@JsonProperty(access=Access.WRITE_ONLY)
+	private Class classes;
 
-	public int getSessionId() {
+	public long getSessionId() {
 		return sessionId;
 	}
 
-	public void setSessionId(int sessionId) {
+	public void setSessionId(long sessionId) {
 		this.sessionId = sessionId;
 	}
 
@@ -39,12 +43,12 @@ public class Session {
 		this.createdOn = createdOn;
 	}
 
-	public double getRunTime() {
-		return runTime;
+	public double getSessionDuration() {
+		return sessionDuration;
 	}
 
-	public void setRunTime(double runTime) {
-		this.runTime = runTime;
+	public void setSessionDuration(double sessionDuration) {
+		this.sessionDuration = sessionDuration;
 	}
 
 	public String getAttendeeIds() {
@@ -63,12 +67,14 @@ public class Session {
 		this.absenteeIds = absenteeIds;
 	}
 
-	public boolean isAssignmentProvided() {
-		return isAssignmentProvided;
+	
+
+	public boolean isAssignmentGiven() {
+		return isAssignmentGiven;
 	}
 
-	public void setAssignmentProvided(boolean isAssignmentProvided) {
-		this.isAssignmentProvided = isAssignmentProvided;
+	public void setAssignmentGiven(boolean isAssignmentGiven) {
+		this.isAssignmentGiven = isAssignmentGiven;
 	}
 
 	public String getListOfTopics() {
@@ -79,19 +85,19 @@ public class Session {
 		this.listOfTopics = listOfTopics;
 	}
 
-	public Classes getClasses() {
+	public Class getClasses() {
 		return classes;
 	}
 
-	public void setClasses(Classes classes) {
+	public void setClasses(Class classes) {
 		this.classes = classes;
 	}
 
 	@Override
 	public String toString() {
-		return "Session [sessionId=" + sessionId + ", createdOn=" + createdOn + ", runTime=" + runTime
+		return "Session [sessionId=" + sessionId + ", createdOn=" + createdOn + ", runTime=" + sessionDuration
 				+ ", attendeeIds=" + attendeeIds + ", absenteeIds=" + absenteeIds + ", isAssignmentProvided="
-				+ isAssignmentProvided + ", listOfTopics=" + listOfTopics + ", classes=" + classes + "]";
+				+ isAssignmentGiven + ", listOfTopics=" + listOfTopics + ", classes=" + classes + "]";
 	}
 
 }

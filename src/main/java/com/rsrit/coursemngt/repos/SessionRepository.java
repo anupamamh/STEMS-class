@@ -4,6 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.rsrit.coursemngt.model.Session;
 
-public interface SessionRepository extends JpaRepository<Session, Integer> {
+public interface SessionRepository extends JpaRepository<Session, Long> {
 
 }

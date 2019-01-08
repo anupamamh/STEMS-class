@@ -10,11 +10,11 @@ public interface SessionService {
 	
 	List<Session> getAllSessions();
 	
-	Session getSessionById(int sessionId);
+	Session getSessionById(long sessionId);
 	
-	Session updateSession(Session session, int sessionId);
+	Session updateSession(Session session, long sessionId);
 	
-	void deleteSessionById(int sessionId);
+	void deleteSessionById(long sessionId);
 	
 	void deleteAllSessions();
 
