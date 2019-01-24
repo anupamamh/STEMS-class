@@ -1,4 +1,4 @@
-package com.rsrit.coursemngt;
+	package com.rsrit.coursemngt;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.mockito.Mockito.when;
@@ -7,46 +7,45 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.sql.Timestamp;
+import java.time.Instant;
+import java.util.Arrays;
+
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.ResultMatcher;
 
-import com.rsrit.coursemngt.model.Classes;
+import com.rsrit.coursemngt.model.Class;
 import com.rsrit.coursemngt.service.ClassesService;
 
 //@RunWith(SpringRunner.class)
 //@WebMvcTest
-public class ClassesRestControllerTests {
+public class ClassControllerTests {
 
-	//@InjectMocks
+	// @InjectMocks
 	MockMvc webMvc;
 
-	//@MockBean
+	// @MockBean
 	ClassesService service;
-
-	//@Test
+//	Class addClass = new Class(1.0,"java",2.0 ,"Anupama",[1.0],Timestamp.from(Instant.now()),2,null,null );
+	 @Test
 	public void getClassesShouldReturnClasses() throws Exception {
 		when(service.getClassByName(Mockito.anyString()))
-				.thenReturn(new Classes(1, "java", 20, null, null, null, null, null, null));
-
+				.thenReturn(new Class(1l ,"java",20l ,"Sandeep",Arrays.asList(new Long[]{1l,2l,3l}),Timestamp.from(Instant.now()) ,2 ,null, null));
+ 
 		MvcResult result = webMvc.perform(get("/classes")).andDo(print()).andExpect(status().isOk())
 				.andExpect(jsonPath("className", containsString("java"))).andReturn();
 
 	}
-	
-	//@Test
+
+	// @Test
 	public void getClassbyId() throws Exception {
-		when(service.getClassById(Mockito.anyInt())).thenReturn(new Classes(1, "java", 20, null, null, null, null, null, null));
-		
-//		webMvc.perform(get("/classes/{id}")).andDo(print()).andExpect(status().isOk()).andExpect((ResultMatcher) jsonPath("classId")
+		when(service.getClassById(Mockito.anyInt()))
+				.thenReturn(new Class(1l ,"java",20l ,"Sandeep",Arrays.asList(new Long[]{1l,2l,3l}),Timestamp.from(Instant.now()) ,2 ,null, null));
+
+		// webMvc.perform(get("/classes/{id}")).andDo(print()).andExpect(status().isOk()).andExpect((ResultMatcher)
+		// jsonPath("classId")
 	}
 
 }

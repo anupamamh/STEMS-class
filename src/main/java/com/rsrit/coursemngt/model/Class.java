@@ -16,11 +16,12 @@ import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
 @Entity
-public class Class{
+public class Class {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -31,19 +32,19 @@ public class Class{
 	private long trainerId;
 	private String trainerName;
 	@ElementCollection
-	private List<String> studentsIds;
+	private List<Long> studentsIds;
 	@JsonProperty(access = Access.WRITE_ONLY)
+	@JsonFormat(shape = JsonFormat.Shape.NUMBER_FLOAT, pattern = "dd-MM-yyyy hh:mm:ss")
 	private Timestamp createdOn;
 	private long createdBy;
-	@OneToMany(mappedBy = "classes",cascade=CascadeType.ALL)
+	@OneToMany(mappedBy = "classes", cascade = CascadeType.ALL)
 	private List<Session> listOfSessions = new ArrayList<Session>();
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "scheduleId")
 	private Schedule schedule;
 
-	
-	/*public Classes(long classId, @NotNull @Size(min = 3, max = 15) String className, long trainerId, String trainerName,
-			List<String> studentsIds, Timestamp createdOn, long createdBy, List<Session> listOfSessions,
+	public Class(long classId, @NotNull @Size(min = 3, max = 15) String className, long trainerId, String trainerName,
+			List<Long> studentsIds, Timestamp createdOn, long createdBy, List<Session> listOfSessions,
 			Schedule schedule) {
 		super();
 		this.classId = classId;
@@ -55,14 +56,12 @@ public class Class{
 		this.createdBy = createdBy;
 		this.listOfSessions = listOfSessions;
 		this.schedule = schedule;
-	}*/
-
+	}
 
 	public long getClassId() {
 		return classId;
 	}
 
-	
 	public void setClassId(long classId) {
 		this.classId = classId;
 	}
@@ -91,11 +90,11 @@ public class Class{
 		this.trainerName = trainerName;
 	}
 
-	public List<String> getStudentsIds() {
+	public List<Long> getStudentsIds() {
 		return studentsIds;
 	}
 
-	public void setStudentsIds(List<String> studentsIds) {
+	public void setStudentsIds(List<Long> studentsIds) {
 		this.studentsIds = studentsIds;
 	}
 

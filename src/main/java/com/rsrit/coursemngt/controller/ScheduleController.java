@@ -32,8 +32,9 @@ public class ScheduleController {
 
 	}
 
-	@PostMapping("/schedules")
-	public void addSchedule(@RequestBody Schedule schedule) {
+	@PostMapping("/{classId}/schedules")
+	public void addSchedule(@RequestBody Schedule schedule, @PathVariable long classId) {
+		
 		scheduleService.addSchedule(schedule);
 	}
 

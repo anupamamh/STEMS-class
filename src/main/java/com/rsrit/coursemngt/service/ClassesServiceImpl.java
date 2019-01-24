@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.rsrit.coursemngt.exception.ClassDoesNotExistsException;
 import com.rsrit.coursemngt.model.Class;
 import com.rsrit.coursemngt.repos.ClassesRepository;
 
@@ -22,14 +23,20 @@ public class ClassesServiceImpl implements ClassesService {
 	}
 
 	@Override
-	public List<Class> getAllClasses() {
+	public List<Class> getAllClasses() throws ClassDoesNotExistsException {
 
 		List<Class> list = classesRepository.findAll();
+		if(list.size()==0) {
+			throw new ClassDoesNotExistsException();
+		}
 		return list;
 	}
 
 	@Override
-	public Class getClassById(long classId) {
+	public Class getClassById(long classId)throws RuntimeException {
+		if(classesRepository.getOne(classId).equals(null)) {
+			throw new RuntimeException();
+		}
 		return classesRepository.getOne(classId);
 
 	}
@@ -46,6 +53,9 @@ public class ClassesServiceImpl implements ClassesService {
 
 	@Override
 	public Class updateClass(Class classes) {
+
+		if(classes.getClassId()==0) {
+		}
 		classesRepository.getOne(classes.getClassId());
 		return classesRepository.save(classes);
 	}

@@ -10,6 +10,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
+
 @Entity
 public class Schedule {
 
@@ -22,6 +25,7 @@ public class Schedule {
 	private List<String> topics;
 	private int numberOfSessions;
 	@OneToOne
+	@JsonProperty(access=Access.WRITE_ONLY)
 	private Class classes;
 
 	public int getScheduleId() {
