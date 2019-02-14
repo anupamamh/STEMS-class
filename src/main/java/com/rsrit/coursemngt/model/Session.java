@@ -30,7 +30,7 @@ public class Session {
 	@OneToMany(mappedBy = "session")
 	private List<Attendance> listOfAttendeeIds = new ArrayList<Attendance>();
 	private boolean isAssignmentGiven;
-	private String listOfTopics;
+	private String topics;
 	@ManyToOne
 	@JsonProperty(access = Access.WRITE_ONLY)
 	private Class classes;
@@ -78,12 +78,12 @@ public class Session {
 		this.isAssignmentGiven = isAssignmentGiven;
 	}
 
-	public String getListOfTopics() {
-		return listOfTopics;
+	public String getTopics() {
+		return topics;
 	}
 
-	public void setListOfTopics(String listOfTopics) {
-		this.listOfTopics = listOfTopics;
+	public void setTopics(String topics) {
+		this.topics = topics;
 	}
 
 	public Class getClasses() {
@@ -98,7 +98,7 @@ public class Session {
 	public String toString() {
 		return "Session [sessionId=" + sessionId + ", createdOn=" + createdOn + ", sessionDuration=" + sessionDuration
 				+ ", listOfAttendeeIds=" + listOfAttendeeIds + ", isAssignmentGiven=" + isAssignmentGiven
-				+ ", listOfTopics=" + listOfTopics + ", classes=" + classes + "]";
+				+ ", listOfTopics=" + topics + ", classes=" + classes + "]";
 	}
 
 }

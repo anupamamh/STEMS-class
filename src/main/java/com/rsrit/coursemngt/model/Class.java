@@ -43,6 +43,11 @@ public class Class {
 	@JoinColumn(name = "scheduleId")
 	private Schedule schedule;
 
+	public Class() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 	public Class(long classId, @NotNull @Size(min = 3, max = 15) String className, long trainerId, String trainerName,
 			List<Long> studentsIds, Timestamp createdOn, long createdBy, List<Session> listOfSessions,
 			Schedule schedule) {

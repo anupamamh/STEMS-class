@@ -28,13 +28,12 @@ public class ClassControllerTests {
 
 	// @MockBean
 	ClassesService service;
-//	Class addClass = new Class(1.0,"java",2.0 ,"Anupama",[1.0],Timestamp.from(Instant.now()),2,null,null );
 	 @Test
 	public void getClassesShouldReturnClasses() throws Exception {
-		when(service.getClassByName(Mockito.anyString()))
+		when(service.getClassByName("java"))
 				.thenReturn(new Class(1l ,"java",20l ,"Sandeep",Arrays.asList(new Long[]{1l,2l,3l}),Timestamp.from(Instant.now()) ,2 ,null, null));
  
-		MvcResult result = webMvc.perform(get("/classes")).andDo(print()).andExpect(status().isOk())
+		MvcResult result =  webMvc.perform(get("/classes")).andDo(print()).andExpect(status().isOk())
 				.andExpect(jsonPath("className", containsString("java"))).andReturn();
 
 	}

@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.rsrit.coursemngt.exception.ClassDoesNotExistsException;
@@ -51,17 +50,16 @@ public class ClassesController {
 	}
 
 	// retrieving classes by studentID or trainerId
-	@GetMapping("/classes/{Id}")
-	public Class getClassesByIds(@RequestParam long studentId, @RequestParam long trainerId) {
-
-		if (String.valueOf(studentId) != null) {
-			return classesService.getClassByStudentId(studentId);
-		} else {
-			return classesService.getClassByTrainerId(trainerId);
-		}
-
-	}
-
+	/*
+	 * @GetMapping("/classes/{Id}") public Class getClassesByIds(@RequestParam long
+	 * studentId, @RequestParam long trainerId) {
+	 * 
+	 * if (String.valueOf(studentId) != null) { return
+	 * classesService.getClassByStudentId(studentId); } else { return
+	 * classesService.getClassByTrainerId(trainerId); }
+	 * 
+	 * }
+	 */
 	/*
 	 * // displaying class by id
 	 * 
@@ -134,51 +132,70 @@ public class ClassesController {
 	 * classesService.deleteAllClasses(); }
 	 */
 	@PostMapping("/{classId}/schedule")
-	public void addSchedule(@RequestBody Schedule schedule, @PathVariable long classId)throws ClassDoesNotExistsException {
+	public void addSchedule(@RequestBody Schedule schedule, @PathVariable long classId)
+			throws ClassDoesNotExistsException {
 		try {
-		Class classToAddSchedule = classesService.getClassById(classId);
-		if (!classToAddSchedule.equals(null)) {
-			schedule.setClasses(classToAddSchedule);
-			scheduleService.addSchedule(schedule);
-			classToAddSchedule.setSchedule(schedule);
-			classesService.updateClass(classToAddSchedule);
-		}
-		}catch (RuntimeException e) {
+			Class classToAddSchedule = classesService.getClassById(classId);
+			if (!classToAddSchedule.equals(null)) {
+				schedule.setClasses(classToAddSchedule);
+				scheduleService.addSchedule(schedule);
+				classToAddSchedule.setSchedule(schedule);
+				classesService.updateClass(classToAddSchedule);
+			}
+		} catch (RuntimeException e) {
 			throw new ClassDoesNotExistsException("Class not found for the given Id", e, 404);
 		}
- 
+
 	}
 
 	@GetMapping("/{classId}/schedule")
-	public Schedule getAllSchedules(@PathVariable long classId)throws ClassDoesNotExistsException {
+	public Schedule getAllSchedules(@PathVariable long classId) throws ClassDoesNotExistsException {
 		try {
-		Class classToGetSchedule = classesService.getClassById(classId);
-		if(!classToGetSchedule.equals(null)) {
-		return classToGetSchedule.getSchedule();
-		}else
-		{
-			System.out.println("in else block");
-			return null;
-		}
-		
-		}
-		catch(RuntimeException e){
+			Class classToGetSchedule = classesService.getClassById(classId);
+			if (!classToGetSchedule.equals(null)) {
+				return classToGetSchedule.getSchedule();
+			} else {
+				System.out.println("in else block");
+				return null;
+			}
+
+		} catch (RuntimeException e) {
 			throw new ClassDoesNotExistsException("No Class found for the given Class Id.", e, 404);
 		}
-		
+
 	}
 
 	@PutMapping("/{classId}/schedule/{scheduleId}")
-	public void updateSchedule(@RequestBody Schedule schedule, @PathVariable int scheduleId,
-			@PathVariable long classId)throws ClassDoesNotExistsException {
+	public void updateSchedule(@RequestBody Schedule schedule, @PathVariable int scheduleId, @PathVariable long classId)
+			throws ClassDoesNotExistsException {
 		try {
-		Class classToUpdateSchedule = classesService.getClassById(classId);
-		schedule.setClasses(classToUpdateSchedule);
-		scheduleService.updateScheduleById(schedule, scheduleId);
-		}
-		catch(RuntimeException e){
+			Class classToUpdateSchedule = classesService.getClassById(classId);
+			schedule.setClasses(classToUpdateSchedule);
+			scheduleService.updateScheduleById(schedule, scheduleId);
+		} catch (RuntimeException e) {
 			throw new ClassDoesNotExistsException("No Class found for the given Class Id.", e, 404);
 		}
 	}
 
+	// displaying class by TrainerId
+	@GetMapping("/classbytrainer/{trainerId}")
+	public List<Class> getClassByTrainerId(@PathVariable long trainerId) throws Exception {
+		try {
+			List<Class> tempClasses = classesService.getClassByTrainerId(trainerId);
+			return tempClasses;
+		} catch (RuntimeException e) {
+			throw new ClassDoesNotExistsException("No Classees found for the given Trainer .", e, 404);
+		}
+
+	}
+	@GetMapping("/classbystudent/{studentId}")
+	public List<Class> getClassByStudentId(@PathVariable long studentId) throws Exception {
+		try {
+			List<Class> tempClasses = classesService.getClassByStudentsIds(studentId);
+			return tempClasses;
+		} catch (RuntimeException e) {
+			throw new ClassDoesNotExistsException("No Classees found for the given Students .", e, 404);
+		}
+
+	}
 }

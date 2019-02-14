@@ -21,8 +21,8 @@ public interface ClassesService {
 
 	Class getClassByName(String string);
 
-	Class getClassByStudentId(long studentId);
+	List<Class> getClassByStudentsIds(long studentId);
 
-	Class getClassByTrainerId(long trainerId);
+	List<Class> getClassByTrainerId(long trainerId);
 
 }

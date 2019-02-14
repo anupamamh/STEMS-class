@@ -73,19 +73,25 @@ public class ClassesServiceImpl implements ClassesService {
 	}
 
 	@Override
-	public Class getClassByName(String string) {
-		return null;
+	public Class getClassByName(String className) {
+		return classesRepository.findByClassName(className);
 
 	}
 
 	@Override
-	public Class getClassByStudentId(long studentId) {
-		return classesRepository.getOne(studentId);
+	public List<Class> getClassByStudentsIds(long studentId) {
+		return classesRepository.getClassByStudentsIds(studentId);
 	}
 
 	@Override
-	public Class getClassByTrainerId(long trainerId) {
-		return classesRepository.getOne(trainerId);
-	}
+	public List<Class> getClassByTrainerId(long trainerId) {
 
+		List<Class> list =  classesRepository.getClassByTrainerId(trainerId);
+		if(list.size()==0) {
+			throw new ClassDoesNotExistsException();
+		}
+		return list;
+
+	}
+	
 }
